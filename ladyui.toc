@@ -1,0 +1,25 @@
+## Interface: 20400
+## Title: ladyui
+## Author: modernist
+## Notes: small 2.4.3 ui
+
+camera\camera.lua
+
+chat\chat.lua
+
+dock\bars.lua
+dock\xp.lua
+
+skin\button.lua
+skin\frame.lua
+skin\text.lua
+
+map\mini.lua
+map\pins.lua
+map\world.lua
+
+tooltip\tooltip.lua
+
+uiparent\uiparent.lua
+
+unit\unit.lua
