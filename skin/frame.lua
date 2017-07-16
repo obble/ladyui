@@ -1,9 +1,5 @@
 
 
-    -- colour is no longer functionally applied here
-    -- frames are instead collectedinto a table to be formatted within the options menu
-    -- through the colourpickerframe
-
     LADYUI_COLOURELEMENTS_FOR_UI = {}
     LADYUI_COLOURELEMENTS_BORDER_FOR_UI = {}
 
@@ -63,6 +59,7 @@
         MainMenuBarLeftEndCap,
         MainMenuBarRightEndCap,
         ExhaustionTick:GetNormalTexture(),
+        _G[TargetFrameSpellBar:GetName()..'Border']
     }) do tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v) end
 
         -- chat
@@ -75,6 +72,8 @@
         local bagName = 'ContainerFrame'..i
         local _, a, b, _, c, _, d = _G[bagName]:GetRegions()
         for _, v in pairs({a, b, c, d}) do tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v) end
+        local a, b = _G[bagName..'Portrait'], _G[bagName..'BackgroundMiddle2']
+        for _, v in pairs({a, b, c}) do tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v) end
     end
 
 
@@ -114,6 +113,9 @@
         -- LOOT
     local _, a = LootFrame:GetRegions()
     tinsert(LADYUI_COLOURELEMENTS_FOR_UI, a)
+
+    local _, a = LFGParentFrame:GetRegions()
+    for _, v in pairs({a}) do tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v) end
 
 
         -- MERCHANT

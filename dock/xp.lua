@@ -4,6 +4,12 @@
     local _, class = UnitClass'Player'
     local colour = RAID_CLASS_COLORS[class]
 
+    local bars = {
+        MainMenuExpBar, ReputationWatchStatusBar
+    }
+
+    table.insert(barstosmooth, bars)
+
     MainMenuExpBar:SetWidth(512) MainMenuExpBar:SetHeight(5)
     MainMenuExpBar:ClearAllPoints() MainMenuExpBar:SetPoint('TOP', MainMenuBar, 0, -4)
     MainMenuExpBar:SetBackdrop(BACKDROP)

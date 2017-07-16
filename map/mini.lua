@@ -1,6 +1,7 @@
 
 
-    local _, class = UnitClass'player'
+    local _, class  = UnitClass'player'
+    local hover     = {}
 
     local zoom = function()
         if not arg1 then return end

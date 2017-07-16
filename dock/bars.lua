@@ -1,21 +1,5 @@
 
 
-    local _, class = UnitClass'player'
-    local CLASS_ICON_TCOORDS = {
-    	['WARRIOR']		= {0, .25, 0, .25},
-    	['MAGE']		= {.25, .49609375, 0, .25},
-    	['ROGUE']		= {.49609375, 0.7421875, 0, .25},
-    	['DRUID']		= {.7421875, 0.98828125, 0, .25},
-    	['HUNTER']		= {0, .25, .25, 0.5},
-    	['SHAMAN']	 	= {.25, .49609375, .25, 0.5},
-    	['PRIEST']		= {.49609375, .7421875, .25, .5},
-    	['WARLOCK']		= {.7421875, .98828125, .25, .5},
-    	['PALADIN']		= {0, .25, .5, .75},
-    	['DEATHKNIGHT']	= {.25, .5, .5, .75},
-    	['MONK']		= {.5, .73828125, .5, .75},
-    	['DEMONHUNTER']	= {.7421875, .98828125, .5, .75},
-    };
-
     MultiBarRightButton1:ClearAllPoints()
     MultiBarRightButton1:SetPoint('TOPRIGHT', UIParent, 'RIGHT', -6, (MultiBarRight:GetHeight() / 2))
 
@@ -64,14 +48,11 @@
         _G['ShapeshiftButton1'],
     }) do
         button:ClearAllPoints()
-        button:SetPoint('CENTER', UIParent)
-
-        button:SetMovable(true)
-        button:SetUserPlaced(true)
-        button:RegisterForDrag('LeftButton')
+        button:SetPoint('BOTTOMLEFT', MainMenuBar, 'TOPLEFT', 40, 0)
+        button:RegisterForDrag'LeftButton'
 
         button:HookScript('OnDragStart', function(self)
-            if (IsShiftKeyDown() and IsAltKeyDown()) then
+            if IsShiftKeyDown() and IsAltKeyDown() then
                 self:StartMoving()
             end
         end)
@@ -103,9 +84,9 @@
             _G['ShapeshiftBarRight'],
             _G['PossessBackground1'],
             _G['PossessBackground2'],
+            _G['MainMenuBarTexture2'],
+            _G['MainMenuBarTexture3']
         }) do
-            -- texture:ClearAllPoints()
-            -- texture:SetPoint('TOP', UIParent, 99999, 99999)
             texture:SetParent(f)
         end
     end
@@ -114,7 +95,6 @@
         _G['MainMenuBar'],
         _G['MainMenuExpBar'],
         _G['MainMenuBarMaxLevelBar'],
-
         _G['ReputationWatchStatusBar'],
         _G['ReputationWatchBar'],
     }) do
@@ -122,35 +102,109 @@
         -- bar:SetFrameStrata('BACKGROUND')
     end
 
-    local bp        = _G['MainMenuBarBackpackButton']
-    local bpicon    = _G['MainMenuBarBackpackButtonIconTexture']
-    bp:SetWidth(20)
-    bp:SetHeight(20)
-    bp:ClearAllPoints()
-    bp:SetNormalTexture''
-    bp:SetPoint('BOTTOM', MainMenuBarArtFrame, 308, 6)
-    bpicon:SetTexCoord(.1, .9, .1, .9)
-
     for i = 0, 3 do
-        _G['CharacterBag'..i..'Slot']:SetWidth(14)
-        _G['CharacterBag'..i..'Slot']:SetHeight(14)
-        _G['CharacterBag'..i..'Slot']:SetNormalTexture''
-        _G['CharacterBag'..i..'SlotIconTexture']:SetTexCoord(.1, .9, .1, .9)
+        local bar   = _G['MainMenuBarMaxLevelBar']
+        local b     = _G['MainMenuMaxLevelBar'..i]
+        b:SetWidth(128)
+        bar:SetPoint('TOP', MainMenuBar, -60, -11)
     end
 
-    _G['CharacterBag0Slot']:ClearAllPoints()
-    _G['CharacterBag0Slot']:SetPoint('BOTTOM', MainMenuBarArtFrame, 264, 6)
-    _G['CharacterBag1Slot']:ClearAllPoints()
-    _G['CharacterBag1Slot']:SetPoint('BOTTOM', MainMenuBarArtFrame, 264, 25)
-    _G['CharacterBag2Slot']:ClearAllPoints()
-    _G['CharacterBag2Slot']:SetPoint('BOTTOM', MainMenuBarArtFrame, 282, 6)
-    _G['CharacterBag3Slot']:ClearAllPoints()
-    _G['CharacterBag3Slot']:SetPoint('BOTTOM', MainMenuBarArtFrame, 282, 25)
+    local bp        = _G['MainMenuBarBackpackButton']
+    local bpicon    = _G['MainMenuBarBackpackButtonIconTexture']
+    local count     = _G['MainMenuBarBackpackButtonCount']
+    bp:SetWidth(26)
+    bp:SetHeight(26)
+    bp:ClearAllPoints()
+    bp:SetNormalTexture''
+    bp:SetPoint('BOTTOM', MainMenuBarArtFrame, 275, 8)
 
+    bpicon:SetTexCoord(.1, .9, .1, .9)
+
+    count:ClearAllPoints()
+    count:SetPoint('BOTTOM', bp, 1, 0)
+
+    bp.arrow = bp:CreateTexture(nil, 'OVERLAY')
+    bp.arrow:SetTexture[[Interface\MoneyFrame\Arrow-Right-Up]]
+    bp.arrow:SetHeight(16)
+    bp.arrow:SetWidth(16)
+    bp.arrow:SetTexCoord(1,0,0,0,1,1,0,1)
+    bp.arrow:SetPoint('BOTTOM', bp, 'TOP', 2, 1)
+
+    bp.mouseover = CreateFrame('Button', nil, bp)
+    bp.mouseover:SetWidth(30)
+    bp.mouseover:SetHeight(100)
+    bp.mouseover:SetPoint('BOTTOM', bp, 'TOP')
+    bp.mouseover:SetFrameLevel(10)
+
+    local ShowBags = function()
+        bp.arrow:SetPoint('BOTTOM', bp, 'TOP', 2, 4)
+        for i = 0, 3 do
+            local s = _G['CharacterBag'..i..'Slot']
+            s:SetAlpha(1)
+            s:EnableMouse(true)
+        end
+    end
+
+    local HideBags = function()
+        bp.arrow:SetPoint('BOTTOM', bp, 'TOP', 2, 1)
+        for i = 0, 3 do
+            local s = _G['CharacterBag'..i..'Slot']
+            s:SetAlpha(0)
+            s:EnableMouse(false)
+        end
+    end
+
+    local SetBagToggle = function(min, max, toggle)
+        for i = min, max do
+            if toggle == 'open' then OpenBag(i) else CloseBag(i) end
+        end
+    end
+
+    ToggleBackpack = function()
+        if  IsBagOpen(0) then
+			CloseBankFrame()
+			SetBagToggle(0, 11)
+		else
+            SetBagToggle(0, 4, 'open')
+        end
+    end
+
+    bp:HookScript('OnEnter', ShowBags)
+    bp:HookScript('OnLeave', HideBags)
+    bp.mouseover:SetScript('OnEnter', ShowBags)
+    bp.mouseover:SetScript('OnLeave', HideBags)
+
+    for i = 0, 3 do
+        local s = _G['CharacterBag'..i..'Slot']
+        local t = _G['CharacterBag'..i..'SlotIconTexture']
+        local c = _G['CharacterBag'..i..'SlotCount']
+        s:SetWidth(14)
+        s:SetHeight(14)
+        s:SetNormalTexture''
+        s:SetAlpha(0)
+        s:EnableMouse(false)
+        s:SetFrameLevel(11)
+
+        c:SetFont(STANDARD_TEXT_FONT, 9, 'OUTLINE')
+        c:ClearAllPoints()
+        c:SetPoint('LEFT', s, 'RIGHT', 6, 1)
+
+        t:SetTexCoord(.1, .9, .1, .9)
+
+        if i == 0 then
+            s:ClearAllPoints()
+            s:SetPoint('BOTTOM', MainMenuBarBackpackButton, 'TOP', 0, 14)
+        else
+            s:ClearAllPoints()
+            s:SetPoint('BOTTOM', _G['CharacterBag'..(i - 1)..'Slot'], 'TOP', 0, 6)
+        end
+
+        s:HookScript('OnEnter', ShowBags)
+        s:HookScript('OnLeave', HideBags)
+    end
 
     MainMenuBarTexture0:SetPoint('BOTTOM', MainMenuBarArtFrame, -128, 0)
     MainMenuBarTexture1:SetPoint('BOTTOM', MainMenuBarArtFrame, 128, 0)
-    MainMenuBarTexture3:Hide()
 
     MainMenuMaxLevelBar0:SetPoint('BOTTOM', MainMenuBarMaxLevelBar, 'TOP', -128, 0)
 
@@ -160,17 +214,29 @@
         v:SetTexture[[Interface\MainMenuBar\UI-MainMenuBar-EndCap-Human]]
     end
 
-    CharacterMicroButton:ClearAllPoints()
-    CharacterMicroButton:SetPoint('BOTTOMLEFT', 9000, 9000)
+    function MainMenuBarBackpackButton_UpdateFreeSlots()
+    	local total, slots, family = 0
+    	for i = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+    		slots, family = GetContainerNumFreeSlots(i)
+    		if  family == 0 then
+    			total = total + slots
+    		end
+    	end
 
-    local menu = CreateFrame('Frame', 'ladymenu', MainMenuBarArtFrame)
-    menu:SetWidth(20)
-    menu:SetHeight(20)
-    menu:SetPoint('BOTTOM', MainMenuBarArtFrame, -308, 6)
+    	MainMenuBarBackpackButton.freeSlots = total
+    	MainMenuBarBackpackButtonCount:SetText(total > 0 and string.format('%s', total) or '|cffff0000Full|r')
+    end
 
-    menu.t = menu:CreateTexture(nil, 'ARTWORK')
-    menu.t:SetTexture[[Interface\GLUES\CHARACTERCREATE\UI-CHARACTERCREATE-CLASSES]]
-    menu.t:SetTexCoord(unpack(CLASS_ICON_TCOORDS[class]))
-    menu.t:SetAllPoints()
+    hooksecurefunc('MultiActionBar_Update', function()
+        local one, two = GetActionBarToggles()
+        for _, v in pairs({
+            _G['PossessButton1'],
+            _G['PetActionButton1'],
+            _G['ShapeshiftButton1'],
+        }) do
+            local offset = SHOW_MULTI_ACTIONBAR_2 and 88 or SHOW_MULTI_ACTIONBAR_1 and 44 or 0
+            v:SetPoint('BOTTOMLEFT', MainMenuBar, 'TOPLEFT', 40, offset)
+        end
+    end)
 
     --

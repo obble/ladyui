@@ -30,10 +30,17 @@
     end
 
     SLASH_FRAMESTACK1 = '/fs'
-    SLASH_FRAMESTACK3 = '/fstack'
-    SLASH_FRAMESTACK2 = '/framestack'
+    SLASH_FRAMESTACK2 = '/fstack'
+    SLASH_FRAMESTACK3 = '/framestack'
     SlashCmdList.FRAMESTACK = function()
         print(GetMouseFocus():GetName())
+    end
+
+    SLASH_RL1 = '/rl'
+    SLASH_RL2 = '/reload'
+    SLASH_RL3 = '/reloadui'
+    SlashCmdList.RL = function()
+        ReloadUI()
     end
 
     local AddMessage = function(self, t,...)

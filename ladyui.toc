@@ -3,12 +3,15 @@
 ## Author: modernist
 ## Notes: small 2.4.3 ui
 
-camera\camera.lua
+statusbar\smoothing.lua
 
 chat\chat.lua
 
 dock\bars.lua
+dock\menu.lua
 dock\xp.lua
+
+error\error.lua
 
 skin\button.lua
 skin\frame.lua
@@ -17,6 +20,10 @@ skin\text.lua
 map\mini.lua
 map\pins.lua
 map\world.lua
+
+nameplate\nameplate.lua
+
+raid\unit.lua
 
 tooltip\tooltip.lua
 

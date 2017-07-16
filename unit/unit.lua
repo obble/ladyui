@@ -3,8 +3,21 @@
     local TEXTURE        = [[Interface\AddOns\ladyui\art\statusbar.tga]]
     local NAME           = [[Interface\AddOns\ladyui\art\name.tga]]
     local BACKDROP       = {bgFile = [[Interface\Tooltips\UI-Tooltip-Background]]}
+    local events         = {'PLAYER_ENTERING_WORLD', 'PARTY_MEMBERS_CHANGED', 'PLAYER_TARGET_CHANGED', 'UNIT_FACTION'}
     local _, class       = UnitClass'player'
     local colour         = RAID_CLASS_COLORS[class]
+
+    local bars = {
+        PlayerFrameHealthBar, PlayerFrameManaBar,
+        TargetFrameHealthBar, TargetFrameManaBar,
+        MainMenuExpBar, ReputationWatchStatusBar,
+        PartyMemberFrame1HealthBar, PartyMemberFrame1ManaBar,
+        PartyMemberFrame2HealthBar, PartyMemberFrame2ManaBar,
+        PartyMemberFrame3HealthBar, PartyMemberFrame3ManaBar,
+        PartyMemberFrame4HealthBar, PartyMemberFrame4ManaBar,
+    }
+
+    table.insert(barstosmooth, bars)
 
     PlayerFrameBackground.bg = PlayerFrame:CreateTexture(nil, 'ARTWORK')
     PlayerFrameBackground.bg:SetPoint('TOPLEFT', PlayerFrameBackground)
@@ -89,8 +102,7 @@
     end
 
     local t = CreateFrame'Frame'
-    t:RegisterEvent'PLAYER_ENTERING_WORLD' t:RegisterEvent'PARTY_MEMBERS_CHANGED'
-    t:RegisterEvent'PLAYER_TARGET_CHANGED' t:RegisterEvent'UNIT_FACTION'
+    for _, v in pairs(events) do t:RegisterEvent(v) end
     t:SetScript('OnEvent', function()           -- COLOUR UNIT
         if event == 'PLAYER_ENTERING_WORLD' or event == 'PARTY_MEMBERS_CHANGED' then
             addPartyColor()
