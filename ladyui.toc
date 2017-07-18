@@ -16,6 +16,7 @@ error\error.lua
 skin\button.lua
 skin\frame.lua
 skin\text.lua
+skin\addon\zygor.lua
 
 map\mini.lua
 map\pins.lua

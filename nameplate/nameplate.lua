@@ -72,8 +72,8 @@
         name:ClearAllPoints()
         name:SetPoint('BOTTOMLEFT', Health, 'TOPLEFT', -1, 7)
 
-        level:SetFont(STANDARD_TEXT_FONT, 10)
-        level:SetPoint('BOTTOMRIGHT', Health, 'TOPRIGHT', 1, 6) -- lol
+        level:SetFont(STANDARD_TEXT_FONT, 11)
+        level:SetPoint('BOTTOMRIGHT', Health, 'TOPLEFT', -7, -8) -- lol?
         level:SetJustifyH'RIGHT'
 
         highlight:SetTexture''

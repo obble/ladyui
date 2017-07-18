@@ -319,4 +319,14 @@
     e2:SetScript('OnEvent', UpdateBag)
     e2:RegisterEvent'BAG_UPDATE'
 
+    local e3 = CreateFrame'Frame'
+    e3:RegisterEvent'ADDON_LOADED'
+    e3:SetScript('OnEvent', function(self, event, addon)
+        if  addon == 'ZygorGuidesViewer' then
+            addBorder(ZygorGuidesViewerMiniFrame, 3)
+            ZygorGuidesViewerMiniFrame:SetBorderColor(r, g, b)
+            ZygorGuidesViewerMiniFrame_Border:SetBackdropBorderColor(0, 0, 0, 0)
+        end
+    end)
+
     --
