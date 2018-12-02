@@ -5,6 +5,8 @@
 
 statusbar\smoothing.lua
 
+bag\greys.lua
+
 chat\chat.lua
 
 dock\bars.lua
