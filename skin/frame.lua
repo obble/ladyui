@@ -386,12 +386,18 @@
         end
     end)
 
-    for _, v in pairs(LADYUI_COLOURELEMENTS_FOR_UI) do
-         v:SetVertexColor(0, 0, 0)
+    local OnEvent = function()
+        for _, v in pairs(LADYUI_COLOURELEMENTS_FOR_UI) do
+             v:SetVertexColor(0, 0, 0)
+        end
+        for _, v in pairs(LADYUI_COLOURELEMENTS_BORDER_FOR_UI) do
+             v:SetBackdropBorderColor(0, 0, 0)
+        end
     end
-    for _, v in pairs(LADYUI_COLOURELEMENTS_BORDER_FOR_UI) do
-         v:SetBackdropBorderColor(0, 0, 0)
-    end
+
+    local e = CreateFrame'Frame'
+    e:RegisterEvent'PLAYER_LOGIN'
+    e:SetScript('OnEvent', OnEvent)
 
 
     --

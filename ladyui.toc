@@ -4,7 +4,11 @@
 ## Notes: small 2.4.3 ui
 
 statusbar\smoothing.lua
+data\table.lua
 
+bag\bag\bag.lua
+bag\bank\bank.lua
+bag\update.lua
 bag\greys.lua
 
 chat\chat.lua

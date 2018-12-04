@@ -1,6 +1,4 @@
 
-	local H 	= {}
-
 	local OnEnter = function(self)
 		GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
  		GameTooltip:SetText'Clear Your bags of the stuff you don\'t need. All grey items will be sold.'

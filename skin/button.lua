@@ -180,6 +180,40 @@
         end
     end
 
+    for i = 1, 28 do
+        local bu = _G['BankFrameItem'..i]
+        local ic = _G['BankFrameItem'..i..'IconTexture']
+        addBorder(bu)
+        bu:SetBorderColor(r, g, b)
+
+        if bu:GetNormalTexture() then bu:GetNormalTexture():SetTexture'' end
+
+        ic:SetTexCoord(.1, .9, .1, .9)
+
+        bu.bg = bu:CreateTexture(nil, 'BACKGROUND')
+        bu.bg:SetAllPoints()
+        bu.bg:SetTexture[[Interface\Buttons\UI-Slot-Background]]
+        bu.bg:SetTexCoord(.075, .6, .075, .6)
+        bu.bg:SetAlpha(.4)
+    end
+
+    for i = 1, 7 do
+        local bu = _G['BankFrameBag'..i]
+        local ic = _G['BankFrameBag'..i..'IconTexture']
+        addBorder(bu)
+        bu:SetBorderColor(r, g, b)
+
+        if bu:GetNormalTexture() then bu:GetNormalTexture():SetTexture'' end
+
+        ic:SetTexCoord(.1, .9, .1, .9)
+
+        bu.bg = bu:CreateTexture(nil, 'BACKGROUND')
+        bu.bg:SetAllPoints()
+        bu.bg:SetTexture[[Interface\Buttons\UI-Slot-Background]]
+        bu.bg:SetTexCoord(.075, .6, .075, .6)
+        bu.bg:SetAlpha(.4)
+    end
+
     for i = 1, 2 do
         local bu = _G['TempEnchant'..i]
         local bo = _G['TempEnchant'..i..'Border']
