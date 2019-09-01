@@ -81,7 +81,5 @@ end
 local e = CreateFrame("frame");
 e:RegisterEvent("ADDON_LOADED");
 e:SetScript("OnEvent", function(self, event, addon)
-  if  addon == 'Combuctor' then
   		ladyui__wait(0.5,ladyui_skin_combuctor);
-  end
 end);
