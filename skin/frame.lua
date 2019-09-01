@@ -167,7 +167,7 @@
     end
 
 
-        -- QUEST
+         --QUEST
     QuestGreetingFrameHorizontalBreak:SetWidth(278)
 
     for _, v in pairs({
@@ -286,7 +286,13 @@
         tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v)
     end
 
-
+		--PVPFrame
+	
+	local y = { PVPFrame:GetRegions() }
+	for _, v in pairs(y) do
+		tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v)
+	end
+	
         -- TRADE
     local _, _, a, b, c, d = TradeFrame:GetRegions()
     for _, v in pairs({a, b, c, d, e}) do
@@ -306,7 +312,30 @@
         tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v)
     end
 
-
+		--CharacterFrameTabs
+	for i = 1, 5 do
+		if _G["CharacterFrameTab"..i] then
+			local cft={ _G["CharacterFrameTab"..i]:GetRegions() }
+			for _, v in pairs(cft) do
+				if not v:IsObjectType("FontString") then
+					tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v)
+				end
+			end
+		end
+	end
+	
+		--FriendsFrameTabs
+	for i = 1, 5 do
+		if _G["FriendsFrameTab"..i] then
+			local cft={ _G["FriendsFrameTab"..i]:GetRegions() }
+			for _, v in pairs(cft) do
+				if not v:IsObjectType("FontString") then
+					tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v)
+				end
+			end
+		end
+	end	
+	
         -- COLOUR PICKER
     tinsert(LADYUI_COLOURELEMENTS_BORDER_FOR_UI, ColorPickerFrame)
     tinsert(LADYUI_COLOURELEMENTS_FOR_UI, ColorPickerFrameHeader)
@@ -352,10 +381,12 @@
             for _, v in pairs({a, b, c, d}) do
                 tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v)
             end
-            local a, b, c, d = InspectHonorFrame:GetRegions()
-            for _, v in pairs({a, b, c, d}) do
-                tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v)
-            end
+            if (InspectHonorFrame~=nil) then
+				local a, b, c, d = InspectHonorFrame:GetRegions()
+				for _, v in pairs({a, b, c, d}) do
+					tinsert(LADYUI_COLOURELEMENTS_FOR_UI, v)
+				end
+			end
         elseif arg1 == 'Blizzard_MacroUI' then          -- MACRO
             local _, a, b, c, d = MacroFrame:GetRegions()
             for _, v in pairs({a, b, c, d}) do
